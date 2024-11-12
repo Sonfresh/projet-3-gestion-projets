@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # Projet 3 : Application de Gestion de Projets (Project Management)
 Objectif : Créer une application de gestion de projets qui permet aux utilisateurs de créer et gérer plusieurs projets, avec des fonctionnalités pour gérer les tâches au sein de chaque projet, attribuer des utilisateurs aux projets, et suivre l’avancement. Nous introduirons aussi des notifications, des rappels automatisés, et une interface utilisateur enrichie.
 
