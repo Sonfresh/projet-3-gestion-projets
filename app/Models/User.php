@@ -33,6 +33,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    const ROLE_OWNER = 'owner';
+    const ROLE_MANAGER = 'manager';
+    const ROLE_CONTRIBUTOR = 'contributor';
+
     /**
      * Get the attributes that should be cast.
      *
@@ -49,5 +53,20 @@ class User extends Authenticatable
     public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function isOwner()
+    {
+        return $this->role === self::ROLE_OWNER;
+    }
+
+    public function isManager()
+    {
+        return $this->role === self::ROLE_MANAGER;
+    }
+
+    public function isContributor()
+    {
+        return $this->role === self::ROLE_CONTRIBUTOR;
     }
 }
