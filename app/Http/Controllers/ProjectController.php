@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -30,7 +32,7 @@ class ProjectController extends Controller
      */
     public function create(Request $request)
     {
-        
+        return Inertia::render('Projects/Create');
     }
 
     /**
@@ -38,7 +40,7 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        Auth::user()->projects()->create($request->validated());
+        $projects = Auth::user()->projects()->create($request->validated());
 
         return redirect()->route('projects.index')->with('success', 'Projet créé avec succès.');
     }
@@ -49,6 +51,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $this->authorize('view', $project);
+        $project->load('tasks');
 
         return Inertia::render('Projects/Show', [
             'project' => $project,
@@ -60,7 +63,11 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        
+        $this->authorize('update', $project);
+
+        return Inertia::render('Projects/Edit', [
+            'project' => $project,
+        ]);
     }
 
     /**
